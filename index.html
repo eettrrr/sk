@@ -1,16 +1,57 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+
+
 </head>
 <script>
-    var numberOfPlayers=prompt("Input the number of players.")
-    alert("We play with "+numberOfPlayers+" players.")
+    var numberOfPlayers = prompt("Input the number of players.")
+    alert("We play with " + numberOfPlayers + " players.")
 </script>
+
 <body>
-    
+
+    <script>
+
+
+        //function func_test() 
+        {
+            // alert('button pressed')
+            for (let index = 0; index < numberOfPlayers; index++) {
+                var divaa = document.createElement('input');
+                divaa.setAttribute("id", "myId" + index);
+                divaa.setAttribute("placeholder", "Player " + index);
+                document.body.appendChild(divaa);
+
+                var divDemo = document.createElement('text');
+                var textDemo = document.createTextNode('  ');
+                divDemo.appendChild(textDemo);
+                divDemo.setAttribute("id", "myId");
+
+                document.body.appendChild(divDemo);
+
+            }
+
+
+        }
+
+        window.onload = function () {
+            document.getElementById("myId").setAttribute("class", "myClass");
+        }
+
+
+    </script>
+
+    <input type="button" id="btn_policy" value="button" onClick="func_test()" /></p>
+
+
 </body>
+
 </html>
