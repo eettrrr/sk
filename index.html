@@ -47,39 +47,88 @@
 
         //for (let index = 0; index < 10; index++) 
         {
-            index=0
-            var thisRow = scoreTable.insertRow(index + 1);
+            func_insert_row(1)
+        }
+
+
+    }
+
+    function func_insert_row(rowID){
+
+        
+
+        var index=scoreTable.rows.length-1;
+        
+        if (rowID <= index)
+        {
+
+            var thisButton=document.getElementById("rowButton"+(rowID-1))
+            if (thisButton.value=='confirm')
+            {
+                thisButton.value='cancel'
+            }
+            else{
+                thisButton.value='confirm'
+            }
+            return
+
+        }
+
+            var thisRow = scoreTable.insertRow(index+1 );
             var ThisRowFirstCell = thisRow.insertCell(0);
             ThisRowFirstCell.innerHTML = "R " + (index + 1);
 
             for (let index2 = 0; index2 < numberOfPlayers; index2++) {
                 var thisCellinRow = thisRow.insertCell(index2 + 1);
-                
+
 
                 var divDemo = document.createElement('p');
 
-                var rangeInput=document.createElement('input')
-                rangeInput.setAttribute("id","rangeInput" + index + "_" + index2)
+{
+                var rangeInput = document.createElement('input')
+                rangeInput.setAttribute("id", "rangeInput" + index + "_" + index2)
 
-                rangeInput.setAttribute("type","range")
-                rangeInput.setAttribute("class","slider-width100")
-                rangeInput.setAttribute("value","0")
-                rangeInput.setAttribute("min","0")
-                rangeInput.setAttribute("max",""+Math.min(4,(index+1)))
-                rangeInput.setAttribute("step","1")
-                rangeInput.setAttribute("list","steplist")
-                rangeInput.setAttribute("onchange","func_update(this.value," + index + "," + index2 + ")")
+                rangeInput.setAttribute("type", "range")
+                rangeInput.setAttribute("class", "slider-width100")
+                rangeInput.setAttribute("value", "0")
+                rangeInput.setAttribute("min", "0")
+                rangeInput.setAttribute("max", "" + Math.min(4, (index + 1)))
+                rangeInput.setAttribute("step", "1")
+                rangeInput.setAttribute("list", "steplist")
+                rangeInput.setAttribute("onchange", "func_update('rangeInput',this.value," + index + "," + index2 + ")")
                 divDemo.appendChild(rangeInput);
 
 
-                var spanInput=document.createElement('span')
-                spanInput.setAttribute("id","rangeValue" + index + "_" + index2)
-                spanInput.setAttribute("onClick","func_range_update("+index + "," + index2 + ")")
+                var spanInput = document.createElement('span')
+                spanInput.setAttribute("id", "rangeInputValue" + index + "_" + index2)
+                spanInput.setAttribute("onClick", "func_range_update('rangeInput'," + index + "," + index2 + ")")
 
-                spanInput.innerText=" 0"
+                spanInput.innerText = " 0"
                 divDemo.appendChild(spanInput)
-                
+}
 
+{
+                var rangeInput = document.createElement('input')
+                rangeInput.setAttribute("id", "rangeInputreal" + index + "_" + index2)
+
+                rangeInput.setAttribute("type", "range")
+                rangeInput.setAttribute("class", "slider-width100")
+                rangeInput.setAttribute("value", "0")
+                rangeInput.setAttribute("min", "0")
+                rangeInput.setAttribute("max", "" + Math.min(4, (index + 1)))
+                rangeInput.setAttribute("step", "1")
+                rangeInput.setAttribute("list", "steplist")
+                rangeInput.setAttribute("onchange", "func_update('rangeInputreal',this.value," + index + "," + index2 + ")")
+                divDemo.appendChild(rangeInput);
+
+
+                var spanInput = document.createElement('span')
+                spanInput.setAttribute("id", "rangeInputrealValue" + index + "_" + index2)
+                spanInput.setAttribute("onClick", "func_range_update('rangeInputreal'," + index + "," + index2 + ")")
+
+                spanInput.innerText = " 0"
+                divDemo.appendChild(spanInput)
+}
                 // var rangeVlaue=document.createElement('p')
                 // rangeVlaue.setAttribute("id","rangeValue" + index + "_" + index2)
                 // rangeVlaue.value=" 0"
@@ -90,19 +139,22 @@
                 //"<p><input type='range' class='slider-width100' value='0' min='0' max='" + (index + 1) + "'step='1' list='steplist' onchange='func_update(this.value," + index + "," + index2 + ")'><span id='rangeValue" + index + "_" + index2 + "'> 0</span></p>"
             }
 
-            var thisCellinRow = thisRow.insertCell(numberOfPlayers+1);
-            var divDemo = document.createElement('input')
-            divDemo.setAttribute("type","button")
-            thisCellinRow.appendChild(divDemo);
+            var thisCellinRow2 = thisRow.insertCell(Number(numberOfPlayers) + 1);
+            var divDemo2 = document.createElement('input')
+            divDemo2.setAttribute("type", "button")
+            divDemo2.setAttribute("id", "rowButton"+rowID)
+            divDemo2.setAttribute("value", "confirm")
+            divDemo2.setAttribute("style", "font-size:100%; font-family: 'Aclonica';")
+            divDemo2.setAttribute("onClick","func_insert_row("+(Number(rowID)+1)+")")
+            thisCellinRow2.appendChild(divDemo2);
 
 
         }
 
 
-    }
 
-    function func_range_update(index, index2) {
-        var modifiedRange=document.getElementById("rangeInput" + index + "_" + index2)
+        function func_range_update(id,index, index2) {
+            var modifiedRange =document.getElementById(id + index + "_" + index2)
         if (index<4)
         {
             return
@@ -112,22 +164,22 @@
             modifiedRange.setAttribute("max",String(Math.min(10,index+1)))
             modifiedRange.setAttribute("min","4")
             modifiedRange.setAttribute("value","4")
-            func_update(4,index,index2)
+            func_update(id,4,index,index2)
         }
         else{
             
             modifiedRange.setAttribute("max",""+Math.min(4,(index+1)))
             modifiedRange.setAttribute("min","0")
             modifiedRange.setAttribute("value","0")
-            func_update(0,index,index2)
+            func_update(id,0,index,index2)
         
         }
         
     }
 
 
-    function func_update(val, index, index2) {
-        document.getElementById("rangeValue" + index + "_" + index2).innerText = " "+val;
+    function func_update(id, val, index, index2) {
+        document.getElementById(id+"Value" + index + "_" + index2).innerText = " "+val;
     }
 </script>
 
