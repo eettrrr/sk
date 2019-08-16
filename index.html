@@ -5,18 +5,56 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
+    <title>Skull King Score App</title>
+    <link href='https://fonts.googleapis.com/css?family=Aclonica' rel='stylesheet'>
+	<style>
+		body {
+			font-family: 'Aclonica';
+			font-size: 22px;
+		}
+	</style>
+
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
-
-
+    <link rel="stylesheet" href="landscapelock.css">
 </head>
 <script>
     var numberOfPlayers = prompt("Input the number of players!")
     alert("We play with " + numberOfPlayers + " players.")
+
+    function func_btn_confirm() {
+        var scoreTable = document.getElementById("scoreTable");
+        var header = scoreTable.createTHead();
+        var row = header.insertRow(0);
+        //cell.innerHTML = "<b>This is a table header</b>";
+        var firstCell=row.insertCell(0);
+        firstCell.innerHTML="<h1 id='firstcellid'>round</h1>"
+        //document.getElementById("firstcellid").innerHTML="this"
+
+        for (let index = 0; index < numberOfPlayers; index++) {
+            var cell = row.insertCell(index+1);
+            cell.innerHTML=document.getElementById("textboxName" + index).value;    
+
+//            document.getElementById("textName" + index).innerHTML = document.getElementById("textboxName" + index).value;
+        }
+
+        for (let index = 0; index < 10; index++) {
+            var thisRow=scoreTable.insertRow(index+1);
+            var ThisRowFirstCell=thisRow.insertCell(0);
+            ThisRowFirstCell.innerHTML="Round "+(index+1);
+
+            for (let index2   = 0; index2 < numberOfPlayers; index2++) {
+                var thisCellinRow=thisRow.insertCell(index2+1);
+                thisCellinRow.innerHTML="row"+(index+1)+"cell"+index2
+            }
+            
+        }
+
+
+    }
 </script>
 
-<body>
+<body id="container">
 
     <script>
 
@@ -26,14 +64,15 @@
             // alert('button pressed')
             for (let index = 0; index < numberOfPlayers; index++) {
                 var divaa = document.createElement('input');
-                divaa.setAttribute("id", "myId" + index);
-                divaa.setAttribute("placeholder", "Player " + index);
+                divaa.setAttribute("id", "textboxName" + index);
+                divaa.setAttribute("value", "P" + index);
+                divaa.setAttribute("placeholder", "P" + (index+1));
+                divaa.setAttribute("style","font-size:100%; font-family: 'Aclonica'; position:relative; width:"+(100/numberOfPlayers-5)+"%")
                 document.body.appendChild(divaa);
 
                 var divDemo = document.createElement('text');
                 var textDemo = document.createTextNode('  ');
                 divDemo.appendChild(textDemo);
-                divDemo.setAttribute("id", "myId");
 
                 document.body.appendChild(divDemo);
 
@@ -43,14 +82,20 @@
         }
 
         window.onload = function () {
-            document.getElementById("myId").setAttribute("class", "myClass");
         }
 
 
     </script>
+    
 
-    <input type="button" id="btn_policy" value="button" onClick="func_test()" /></p>
+    <input type="button" id="btn_policy" style="font-size:100%; font-family: 'Aclonica';" value="confirm" onClick="func_btn_confirm()" /></p>
 
+    <h1><span id="textName0"></span><span id="textName1"></span><span id="textName2"></span><span id="textName3"></span><span id="textName4"></span><span id="textName5"></span></h1>
+
+    <table id="scoreTable">
+    </table>
+
+    
 
 </body>
 
