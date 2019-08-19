@@ -19,6 +19,7 @@
     <link rel="stylesheet" href="landscapelock.css">
 </head>
 <script>
+
     var numberOfPlayers = prompt("Input the number of players!")
     alert("We play with " + numberOfPlayers + " players.")
 
@@ -27,8 +28,8 @@
         for (let index = 0; index < numberOfPlayers; index++) {
             document.getElementById("textboxName" + index).style.display = "none"
         }
-        document.getElementById("btn_policy").style.display="none"
-              
+        document.getElementById("btn_policy").style.display = "none"
+
 
         var scoreTable = document.getElementById("scoreTable");
         var header = scoreTable.createTHead();
@@ -53,133 +54,162 @@
 
     }
 
-    function func_insert_row(rowID){
+    var arrClicked = new Array();
 
-        
+    var arrStoredScore = new Array()
+    arrStoredScore["rangeInput"] = new Array()
+    arrStoredScore["rangeInputreal"] = new Array()
+    for (let index = 0; index < 11; index++) {
+        arrStoredScore["rangeInput"][index] = new Array()
+        arrStoredScore["rangeInputreal"][index] = new Array()
 
-        var index=scoreTable.rows.length-1;
-        
-        if (rowID <= index)
-        {
+    }
 
-            var thisButton=document.getElementById("rowButton"+(rowID-1))
-            if (thisButton.value=='confirm')
+
+    function func_insert_row(rowID) { // insert rowID row func_insert_row(2) --> insert the second row
+
+        if (rowID > 1) {
+
+            var thisButton = document.getElementById("rowButton" + (rowID - 1))
+            if (arrClicked[rowID - 1] == false) {
+                thisButton.setAttribute("style", "background-color: #000; color:#fff")
+                arrClicked[rowID - 1] = true
+
+                for (let index2 = 1; index2 <= numberOfPlayers; index2++) {
+                    arrStoredScore["rangeInput"][Number(rowID) - 1][index2] = document.getElementById("rangeInput" + (Number(rowID) - 1) + "_" + index2).value
+                    arrStoredScore["rangeInputreal"][Number(rowID) - 1][index2] = document.getElementById("rangeInputreal" + (Number(rowID) - 1) + "_" + index2).value
+                }
+
+            }
+            else {
+                thisButton.setAttribute("style", "background-color: #fff; color:#000")
+                arrClicked[rowID - 1] = false
+
+                for (let index2 = 1; index2 <= numberOfPlayers; index2++) {
+                    arrStoredScore["rangeInput"][Number(rowID) - 1][index2] = -1
+                    arrStoredScore["rangeInputreal"][Number(rowID) - 1][index2] = -1
+                }
+            }
+
+        }
+
+
+
+        if (rowID < scoreTable.rows.length || rowID > 10) {
+
+
+            return
+
+        }
+
+
+
+
+        var thisRow = scoreTable.insertRow(rowID);
+        var ThisRowFirstCell = thisRow.insertCell(0);
+        ThisRowFirstCell.innerHTML = "R " + (rowID);
+        ThisRowFirstCell.setAttribute("onClick", "func_test()")
+        ThisRowFirstCell.setAttribute("id", "rowButton" + rowID)
+        arrClicked[rowID] = false
+
+        for (let index2 = 1; index2 <= numberOfPlayers; index2++) {
+            var thisCellinRow = thisRow.insertCell(index2);
+
+            var divDemo = document.createElement('p');
+
             {
-                thisButton.value='cancel'
-            }
-            else{
-                thisButton.value='confirm'
-            }
-            return
-
-        }
-
-            var thisRow = scoreTable.insertRow(index+1 );
-            var ThisRowFirstCell = thisRow.insertCell(0);
-            ThisRowFirstCell.innerHTML = "R " + (index + 1);
-
-            for (let index2 = 0; index2 < numberOfPlayers; index2++) {
-                var thisCellinRow = thisRow.insertCell(index2 + 1);
-
-
-                var divDemo = document.createElement('p');
-
-{
+                arrStoredScore["rangeInput"][ rowID][index2] = -1
                 var rangeInput = document.createElement('input')
-                rangeInput.setAttribute("id", "rangeInput" + index + "_" + index2)
+                rangeInput.setAttribute("id", "rangeInput" + rowID + "_" + index2)
 
                 rangeInput.setAttribute("type", "range")
                 rangeInput.setAttribute("class", "slider-width100")
                 rangeInput.setAttribute("value", "0")
                 rangeInput.setAttribute("min", "0")
-                rangeInput.setAttribute("max", "" + Math.min(4, (index + 1)))
+                rangeInput.setAttribute("max", "" + Math.min(4, rowID))
                 rangeInput.setAttribute("step", "1")
                 rangeInput.setAttribute("list", "steplist")
-                rangeInput.setAttribute("onchange", "func_update('rangeInput',this.value," + index + "," + index2 + ")")
+                rangeInput.setAttribute("onchange", "func_update('rangeInput',this.value," + rowID + "," + index2 + ")")
                 divDemo.appendChild(rangeInput);
 
 
                 var spanInput = document.createElement('span')
-                spanInput.setAttribute("id", "rangeInputValue" + index + "_" + index2)
-                spanInput.setAttribute("onClick", "func_range_update('rangeInput'," + index + "," + index2 + ")")
+                spanInput.setAttribute("id", "rangeInputValue" + rowID + "_" + index2)
+                spanInput.setAttribute("onClick", "func_range_update('rangeInput'," + rowID + "," + index2 + ")")
 
                 spanInput.innerText = " 0"
                 divDemo.appendChild(spanInput)
-}
+            }
 
-{
+            {
+                arrStoredScore["rangeInputreal"][rowID][ index2] = -1
+
                 var rangeInput = document.createElement('input')
-                rangeInput.setAttribute("id", "rangeInputreal" + index + "_" + index2)
+                rangeInput.setAttribute("id", "rangeInputreal" + rowID + "_" + index2)
 
                 rangeInput.setAttribute("type", "range")
                 rangeInput.setAttribute("class", "slider-width100")
                 rangeInput.setAttribute("value", "0")
                 rangeInput.setAttribute("min", "0")
-                rangeInput.setAttribute("max", "" + Math.min(4, (index + 1)))
+                rangeInput.setAttribute("max", "" + Math.min(4, rowID))
                 rangeInput.setAttribute("step", "1")
                 rangeInput.setAttribute("list", "steplist")
-                rangeInput.setAttribute("onchange", "func_update('rangeInputreal',this.value," + index + "," + index2 + ")")
+                rangeInput.setAttribute("onchange", "func_update('rangeInputreal',this.value," + rowID + "," + index2 + ")")
                 divDemo.appendChild(rangeInput);
 
 
                 var spanInput = document.createElement('span')
-                spanInput.setAttribute("id", "rangeInputrealValue" + index + "_" + index2)
-                spanInput.setAttribute("onClick", "func_range_update('rangeInputreal'," + index + "," + index2 + ")")
+                spanInput.setAttribute("id", "rangeInputrealValue" + rowID + "_" + index2)
+                spanInput.setAttribute("onClick", "func_range_update('rangeInputreal'," + rowID + "," + index2 + ")")
 
                 spanInput.innerText = " 0"
                 divDemo.appendChild(spanInput)
-}
-                // var rangeVlaue=document.createElement('p')
-                // rangeVlaue.setAttribute("id","rangeValue" + index + "_" + index2)
-                // rangeVlaue.value=" 0"
-                thisCellinRow.appendChild(divDemo);
-
-
-                //thisCellinRow.innerHTML = 
-                //"<p><input type='range' class='slider-width100' value='0' min='0' max='" + (index + 1) + "'step='1' list='steplist' onchange='func_update(this.value," + index + "," + index2 + ")'><span id='rangeValue" + index + "_" + index2 + "'> 0</span></p>"
             }
-
-            var thisCellinRow2 = thisRow.insertCell(Number(numberOfPlayers) + 1);
-            var divDemo2 = document.createElement('input')
-            divDemo2.setAttribute("type", "button")
-            divDemo2.setAttribute("id", "rowButton"+rowID)
-            divDemo2.setAttribute("value", "confirm")
-            divDemo2.setAttribute("style", "font-size:100%; font-family: 'Aclonica';")
-            divDemo2.setAttribute("onClick","func_insert_row("+(Number(rowID)+1)+")")
-            thisCellinRow2.appendChild(divDemo2);
+            // var rangeVlaue=document.createElement('p')
+            // rangeVlaue.setAttribute("id","rangeValue" + index + "_" + index2)
+            // rangeVlaue.value=" 0"
+            thisCellinRow.appendChild(divDemo);
 
 
+            //thisCellinRow.innerHTML = 
+            //"<p><input type='range' class='slider-width100' value='0' min='0' max='" + (index + 1) + "'step='1' list='steplist' onchange='func_update(this.value," + index + "," + index2 + ")'><span id='rangeValue" + index + "_" + index2 + "'> 0</span></p>"
         }
 
+        ThisRowFirstCell.setAttribute("onClick", "func_insert_row(" + (Number(rowID) + 1) + ")")
+
+    }
 
 
-        function func_range_update(id,index, index2) {
-            var modifiedRange =document.getElementById(id + index + "_" + index2)
-        if (index<4)
-        {
+
+    function func_range_update(id, index, index2) {
+        var modifiedRange = document.getElementById(id + index + "_" + index2)
+        if (index < 4 || arrClicked[index]) {
             return
         }
-        if (modifiedRange.getAttribute("min")=="0")
-        {
-            modifiedRange.setAttribute("max",String(Math.min(10,index+1)))
-            modifiedRange.setAttribute("min","4")
-            modifiedRange.setAttribute("value","4")
-            func_update(id,4,index,index2)
+        if (modifiedRange.getAttribute("min") == "0") {
+            modifiedRange.setAttribute("max", String(Math.min(10, index)))
+            modifiedRange.setAttribute("min", "4")
+            modifiedRange.setAttribute("value", "4")
+            func_update(id, 4, index, index2)
         }
-        else{
-            
-            modifiedRange.setAttribute("max",""+Math.min(4,(index+1)))
-            modifiedRange.setAttribute("min","0")
-            modifiedRange.setAttribute("value","0")
-            func_update(id,0,index,index2)
-        
+        else {
+
+            modifiedRange.setAttribute("max", "" + Math.min(4, (index)))
+            modifiedRange.setAttribute("min", "0")
+            modifiedRange.setAttribute("value", "0")
+            func_update(id, 0, index, index2)
+
         }
-        
+
     }
 
 
     function func_update(id, val, index, index2) {
-        document.getElementById(id+"Value" + index + "_" + index2).innerText = " "+val;
+        if (arrStoredScore[id][ index][ index2] != -1) {
+            document.getElementById(id + index + "_" + index2).value = arrStoredScore[id][ index][ index2];
+            return
+        }
+        document.getElementById(id + "Value" + index + "_" + index2).innerText = " " + val;
     }
 </script>
 
