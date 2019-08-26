@@ -41,7 +41,7 @@
 
         for (let index = 0; index < numberOfPlayers; index++) {
             var cell = row.insertCell(index + 1);
-            cell.innerHTML = document.getElementById("textboxName" + index).value;
+            cell.innerHTML = "<p>" + document.getElementById("textboxName" + index).value + ":<br><span id='score_" + (index+1) + "'></span></p>";
 
             //            document.getElementById("textName" + index).innerHTML = document.getElementById("textboxName" + index).value;
         }
@@ -65,6 +65,11 @@
 
     }
 
+    var arrScore = new Array()
+    for (let index = 1; index <= numberOfPlayers; index++) {
+        arrScore[index]=0;
+        
+    }
 
     function func_insert_row(rowID) { // insert rowID row func_insert_row(2) --> insert the second row
 
@@ -72,12 +77,55 @@
 
             var thisButton = document.getElementById("rowButton" + (rowID - 1))
             if (arrClicked[rowID - 1] == false) {
+                // calculating score
                 thisButton.setAttribute("style", "background-color: #000; color:#fff")
                 arrClicked[rowID - 1] = true
 
                 for (let index2 = 1; index2 <= numberOfPlayers; index2++) {
                     arrStoredScore["rangeInput"][Number(rowID) - 1][index2] = document.getElementById("rangeInput" + (Number(rowID) - 1) + "_" + index2).value
                     arrStoredScore["rangeInputreal"][Number(rowID) - 1][index2] = document.getElementById("rangeInputreal" + (Number(rowID) - 1) + "_" + index2).value
+
+                    document.getElementById("rangeInput" + (Number(rowID) - 1) + "_" + index2).style.display='none'
+                    document.getElementById("rangeInputreal" + (Number(rowID) - 1) + "_" + index2).style.display='none'
+                    var foundCheck=document.getElementById("checkBox" + (Number(rowID) - 1) + "_" + index2)
+                    foundCheck.style.display='none'
+
+                    var foundLabel=document.getElementById("LabelBox" + (Number(rowID) - 1) + "_" + index2)
+                    foundLabel.style.display='none'
+
+
+
+                    var bat=Number(arrStoredScore["rangeInput"][Number(rowID) - 1][index2])
+                    var actual=Number(arrStoredScore["rangeInputreal"][Number(rowID) - 1][index2])
+                    if ( bat == actual) {
+                        if (bat == 0)
+                        {
+                            arrScore[index2]+=10*Number(rowID-1)
+                        }
+                        else
+                        {
+                            arrScore[index2]+=20*bat
+                        }
+
+
+                        if ( foundCheck.checked == true) {
+                            arrScore[index2]+=50
+                            foundLabel.style.display='inline'
+                        }
+                        
+                    }
+                    else {
+                        if (bat == 0)
+                        {
+                            arrScore[index2]-= 10*Number(rowID-1)
+
+                        }
+                        else
+                        {
+                            arrScore[index2] -= 10 * Math.abs(bat - actual)
+                        }
+                    }
+                    document.getElementById("score_"+index2).innerHTML=arrScore[index2]
                 }
 
             }
@@ -86,6 +134,48 @@
                 arrClicked[rowID - 1] = false
 
                 for (let index2 = 1; index2 <= numberOfPlayers; index2++) {
+
+                    document.getElementById("rangeInput" + (Number(rowID) - 1) + "_" + index2).style.display='inline'
+                    document.getElementById("rangeInputreal" + (Number(rowID) - 1) + "_" + index2).style.display='inline'
+                    var foundCheck=document.getElementById("checkBox" + (Number(rowID) - 1) + "_" + index2)
+                    foundCheck.style.display='inline'
+
+                    var foundLabel=document.getElementById("LabelBox" + (Number(rowID) - 1) + "_" + index2)
+                    foundLabel.style.display='inline'
+
+
+
+
+                    var bat=Number(arrStoredScore["rangeInput"][Number(rowID) - 1][index2])
+                    var actual=Number(arrStoredScore["rangeInputreal"][Number(rowID) - 1][index2])
+
+                    if ( bat == actual) {
+                        if (bat == 0)
+                        {
+                            arrScore[index2]-=10*Number(rowID-1)
+                        }
+                        else
+                        {
+                            arrScore[index2]-=20*bat
+                        }
+
+                        if ( foundCheck.checked == true) {
+                            arrScore[index2]-=50
+                        }
+                    }
+                    else {
+                        if (bat == 0)
+                        {
+                            arrScore[index2]+= 10*Number(rowID-1)
+
+                        }
+                        else
+                        {
+                            arrScore[index2] += 10 * Math.abs(bat - actual)
+                        }
+                    }
+                    document.getElementById("score_"+index2).innerHTML=arrScore[index2]
+
                     arrStoredScore["rangeInput"][Number(rowID) - 1][index2] = -1
                     arrStoredScore["rangeInputreal"][Number(rowID) - 1][index2] = -1
                 }
@@ -118,7 +208,7 @@
             var divDemo = document.createElement('p');
 
             {
-                arrStoredScore["rangeInput"][ rowID][index2] = -1
+                arrStoredScore["rangeInput"][rowID][index2] = -1
                 var rangeInput = document.createElement('input')
                 rangeInput.setAttribute("id", "rangeInput" + rowID + "_" + index2)
 
@@ -142,7 +232,7 @@
             }
 
             {
-                arrStoredScore["rangeInputreal"][rowID][ index2] = -1
+                arrStoredScore["rangeInputreal"][rowID][index2] = -1
 
                 var rangeInput = document.createElement('input')
                 rangeInput.setAttribute("id", "rangeInputreal" + rowID + "_" + index2)
@@ -164,6 +254,32 @@
 
                 spanInput.innerText = " 0"
                 divDemo.appendChild(spanInput)
+                divDemo.appendChild(document.createElement('br'))
+            }
+
+            {
+                var checkBox = document.createElement('input')
+                checkBox.setAttribute("id", "checkBox" + rowID + "_" + index2)
+                checkBox.setAttribute("type","checkbox")
+
+                var label = document.createElement('label'); 
+                label.setAttribute("id","LabelBox" + rowID + "_" + index2)
+                label.htmlFor = "checkBox" + rowID + "_" + index2
+
+                label.appendChild(document.createTextNode('M')); 
+
+                
+
+
+
+
+
+ 
+
+                divDemo.appendChild(checkBox)
+                divDemo.appendChild(label)
+                
+
             }
             // var rangeVlaue=document.createElement('p')
             // rangeVlaue.setAttribute("id","rangeValue" + index + "_" + index2)
@@ -205,8 +321,8 @@
 
 
     function func_update(id, val, index, index2) {
-        if (arrStoredScore[id][ index][ index2] != -1) {
-            document.getElementById(id + index + "_" + index2).value = arrStoredScore[id][ index][ index2];
+        if (arrStoredScore[id][index][index2] != -1) {
+            document.getElementById(id + index + "_" + index2).value = arrStoredScore[id][index][index2];
             return
         }
         document.getElementById(id + "Value" + index + "_" + index2).innerText = " " + val;
