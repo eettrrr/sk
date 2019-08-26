@@ -71,6 +71,14 @@
         
     }
 
+    var arrMermeid = new Array()
+    for (let index = 0; index < 11; index++) {
+        for (let index2 = 1; index2 < numberOfPlayers; index2++){
+            arrMermeid[index][index2]=false;
+        }
+    }
+
+
     function func_insert_row(rowID) { // insert rowID row func_insert_row(2) --> insert the second row
 
         if (rowID > 1) {
@@ -87,12 +95,6 @@
 
                     document.getElementById("rangeInput" + (Number(rowID) - 1) + "_" + index2).style.display='none'
                     document.getElementById("rangeInputreal" + (Number(rowID) - 1) + "_" + index2).style.display='none'
-                    var foundCheck=document.getElementById("checkBox" + (Number(rowID) - 1) + "_" + index2)
-                    foundCheck.style.display='none'
-
-                    var foundLabel=document.getElementById("LabelBox" + (Number(rowID) - 1) + "_" + index2)
-                    foundLabel.style.display='none'
-
 
 
                     var bat=Number(arrStoredScore["rangeInput"][Number(rowID) - 1][index2])
@@ -108,9 +110,8 @@
                         }
 
 
-                        if ( foundCheck.checked == true) {
+                        if ( arrMermeid[Number(rowID)-1][index2] == true) {
                             arrScore[index2]+=50
-                            foundLabel.style.display='inline'
                         }
                         
                     }
@@ -137,13 +138,6 @@
 
                     document.getElementById("rangeInput" + (Number(rowID) - 1) + "_" + index2).style.display='inline'
                     document.getElementById("rangeInputreal" + (Number(rowID) - 1) + "_" + index2).style.display='inline'
-                    var foundCheck=document.getElementById("checkBox" + (Number(rowID) - 1) + "_" + index2)
-                    foundCheck.style.display='inline'
-
-                    var foundLabel=document.getElementById("LabelBox" + (Number(rowID) - 1) + "_" + index2)
-                    foundLabel.style.display='inline'
-
-
 
 
                     var bat=Number(arrStoredScore["rangeInput"][Number(rowID) - 1][index2])
@@ -159,7 +153,8 @@
                             arrScore[index2]-=20*bat
                         }
 
-                        if ( foundCheck.checked == true) {
+
+                        if ( arrMermeid[Number(rowID)-1][index2] == true) {
                             arrScore[index2]-=50
                         }
                     }
@@ -258,15 +253,13 @@
             }
 
             {
-                var checkBox = document.createElement('input')
-                checkBox.setAttribute("id", "checkBox" + rowID + "_" + index2)
-                checkBox.setAttribute("type","checkbox")
 
-                var label = document.createElement('label'); 
-                label.setAttribute("id","LabelBox" + rowID + "_" + index2)
-                label.htmlFor = "checkBox" + rowID + "_" + index2
+                var imageBox = document.createElement('img');
+                imageBox.setAttribute("src","graymermeid.png")
+                imageBox.setAttribute("alt","Avatar")
 
-                label.appendChild(document.createTextNode('M')); 
+
+                divDemo.appendChild(imageBox); 
 
                 
 
@@ -275,10 +268,6 @@
 
 
  
-
-                divDemo.appendChild(checkBox)
-                divDemo.appendChild(label)
-                
 
             }
             // var rangeVlaue=document.createElement('p')
