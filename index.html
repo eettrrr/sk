@@ -41,7 +41,7 @@
 
         for (let index = 0; index < numberOfPlayers; index++) {
             var cell = row.insertCell(index + 1);
-            cell.innerHTML = "<p>" + document.getElementById("textboxName" + index).value + ":<br><span id='score_" + (index+1) + "'></span></p>";
+            cell.innerHTML = "<p>" + document.getElementById("textboxName" + index).value + ":<br><span id='score_" + (index + 1) + "'></span></p>";
 
             //            document.getElementById("textName" + index).innerHTML = document.getElementById("textboxName" + index).value;
         }
@@ -67,14 +67,26 @@
 
     var arrScore = new Array()
     for (let index = 1; index <= numberOfPlayers; index++) {
-        arrScore[index]=0;
-        
+        arrScore[index] = 0;
+
     }
+
+
+
+    var arrSkullKing = new Array()
+    for (let index = 0; index < 11; index++) {
+        arrSkullKing[index] = new Array()
+        for (let index2 = 1; index2 < numberOfPlayers; index2++) {
+            arrSkullKing[index][index2] = false;
+        }
+    }
+
 
     var arrMermeid = new Array()
     for (let index = 0; index < 11; index++) {
-        for (let index2 = 1; index2 < numberOfPlayers; index2++){
-            arrMermeid[index][index2]=false;
+        arrMermeid[index] = new Array()
+        for (let index2 = 1; index2 < numberOfPlayers; index2++) {
+            arrMermeid[index][index2] = false;
         }
     }
 
@@ -93,40 +105,36 @@
                     arrStoredScore["rangeInput"][Number(rowID) - 1][index2] = document.getElementById("rangeInput" + (Number(rowID) - 1) + "_" + index2).value
                     arrStoredScore["rangeInputreal"][Number(rowID) - 1][index2] = document.getElementById("rangeInputreal" + (Number(rowID) - 1) + "_" + index2).value
 
-                    document.getElementById("rangeInput" + (Number(rowID) - 1) + "_" + index2).style.display='none'
-                    document.getElementById("rangeInputreal" + (Number(rowID) - 1) + "_" + index2).style.display='none'
+                    document.getElementById("rangeInput" + (Number(rowID) - 1) + "_" + index2).style.display = 'none'
+                    document.getElementById("rangeInputreal" + (Number(rowID) - 1) + "_" + index2).style.display = 'none'
 
 
-                    var bat=Number(arrStoredScore["rangeInput"][Number(rowID) - 1][index2])
-                    var actual=Number(arrStoredScore["rangeInputreal"][Number(rowID) - 1][index2])
-                    if ( bat == actual) {
-                        if (bat == 0)
-                        {
-                            arrScore[index2]+=10*Number(rowID-1)
+                    var bat = Number(arrStoredScore["rangeInput"][Number(rowID) - 1][index2])
+                    var actual = Number(arrStoredScore["rangeInputreal"][Number(rowID) - 1][index2])
+                    if (bat == actual) {
+                        if (bat == 0) {
+                            arrScore[index2] += 10 * Number(rowID - 1)
                         }
-                        else
-                        {
-                            arrScore[index2]+=20*bat
+                        else {
+                            arrScore[index2] += 20 * bat
                         }
 
 
-                        if ( arrMermeid[Number(rowID)-1][index2] == true) {
-                            arrScore[index2]+=50
+                        if (arrMermeid[Number(rowID) - 1][index2] == true) {
+                            arrScore[index2] += 50
                         }
-                        
+
                     }
                     else {
-                        if (bat == 0)
-                        {
-                            arrScore[index2]-= 10*Number(rowID-1)
+                        if (bat == 0) {
+                            arrScore[index2] -= 10 * Number(rowID - 1)
 
                         }
-                        else
-                        {
+                        else {
                             arrScore[index2] -= 10 * Math.abs(bat - actual)
                         }
                     }
-                    document.getElementById("score_"+index2).innerHTML=arrScore[index2]
+                    document.getElementById("score_" + index2).innerHTML = arrScore[index2]
                 }
 
             }
@@ -136,40 +144,36 @@
 
                 for (let index2 = 1; index2 <= numberOfPlayers; index2++) {
 
-                    document.getElementById("rangeInput" + (Number(rowID) - 1) + "_" + index2).style.display='inline'
-                    document.getElementById("rangeInputreal" + (Number(rowID) - 1) + "_" + index2).style.display='inline'
+                    document.getElementById("rangeInput" + (Number(rowID) - 1) + "_" + index2).style.display = 'inline'
+                    document.getElementById("rangeInputreal" + (Number(rowID) - 1) + "_" + index2).style.display = 'inline'
 
 
-                    var bat=Number(arrStoredScore["rangeInput"][Number(rowID) - 1][index2])
-                    var actual=Number(arrStoredScore["rangeInputreal"][Number(rowID) - 1][index2])
+                    var bat = Number(arrStoredScore["rangeInput"][Number(rowID) - 1][index2])
+                    var actual = Number(arrStoredScore["rangeInputreal"][Number(rowID) - 1][index2])
 
-                    if ( bat == actual) {
-                        if (bat == 0)
-                        {
-                            arrScore[index2]-=10*Number(rowID-1)
+                    if (bat == actual) {
+                        if (bat == 0) {
+                            arrScore[index2] -= 10 * Number(rowID - 1)
                         }
-                        else
-                        {
-                            arrScore[index2]-=20*bat
+                        else {
+                            arrScore[index2] -= 20 * bat
                         }
 
 
-                        if ( arrMermeid[Number(rowID)-1][index2] == true) {
-                            arrScore[index2]-=50
+                        if (arrMermeid[Number(rowID) - 1][index2] == true) {
+                            arrScore[index2] -= 50
                         }
                     }
                     else {
-                        if (bat == 0)
-                        {
-                            arrScore[index2]+= 10*Number(rowID-1)
+                        if (bat == 0) {
+                            arrScore[index2] += 10 * Number(rowID - 1)
 
                         }
-                        else
-                        {
+                        else {
                             arrScore[index2] += 10 * Math.abs(bat - actual)
                         }
                     }
-                    document.getElementById("score_"+index2).innerHTML=arrScore[index2]
+                    document.getElementById("score_" + index2).innerHTML = arrScore[index2]
 
                     arrStoredScore["rangeInput"][Number(rowID) - 1][index2] = -1
                     arrStoredScore["rangeInputreal"][Number(rowID) - 1][index2] = -1
@@ -253,23 +257,44 @@
             }
 
             {
-
                 var imageBox = document.createElement('img');
-                imageBox.setAttribute("src","graymermeid.png")
-                imageBox.setAttribute("alt","Avatar")
+                var imgMermeidID = "imgMermeid" + rowID + "_" + index2
+
+                arrMermeid[Number(rowID)][index2] = false
+
+                imageBox.setAttribute("src", "nullgraymermeid.png")
+                imageBox.setAttribute("id", imgMermeidID)
+                imageBox.setAttribute("onClick", "func_mermeid(" + rowID + "," + index2 + ")")
 
 
-                divDemo.appendChild(imageBox); 
-
-                
-
-
-
-
-
- 
+                divDemo.appendChild(imageBox);
 
             }
+
+
+            {
+                var imageBox = document.createElement('img');
+                var imgSkullKingID = "imgSkullKing" + rowID + "_" + index2
+
+                arrSkullKing[Number(rowID)][index2] = 0
+
+                imageBox.setAttribute("src", "nullgrayskullking.png")
+                imageBox.setAttribute("id", imgSkullKingID)
+                imageBox.setAttribute("onClick", "func_skullking(" + rowID + "," + index2 + ")")
+
+                var x = document.createElement("LABEL");
+                var t = document.createTextNode("0");
+                x.setAttribute("id",imgSkullKingID+"text")
+                x.setAttribute("for", imgSkullKingID);
+                x.appendChild(t);
+                
+
+                divDemo.appendChild(imageBox);
+                divDemo.appendChild(x);
+
+
+            }
+
             // var rangeVlaue=document.createElement('p')
             // rangeVlaue.setAttribute("id","rangeValue" + index + "_" + index2)
             // rangeVlaue.value=" 0"
@@ -283,6 +308,49 @@
         ThisRowFirstCell.setAttribute("onClick", "func_insert_row(" + (Number(rowID) + 1) + ")")
 
     }
+
+    function func_mermeid(rowID, index2) {
+        var imgMermeidID = "imgMermeid" + rowID + "_" + index2
+        var imgBox = document.getElementById(imgMermeidID)
+
+        if (arrMermeid[Number(rowID)][index2] == false) {
+            imgBox.setAttribute("src", "nullmermeid.png")
+            arrMermeid[Number(rowID)][index2] = true
+        }
+        else {
+
+
+            imgBox.setAttribute("src", "nullgraymermeid.png")
+            arrMermeid[Number(rowID)][index2] = false
+
+        }
+    }
+
+    function func_skullking(rowID, index2) {
+        var imgSkullKingID = "imgSkullKing" + rowID + "_" + index2
+        var imgBox = document.getElementById(imgSkullKingID)
+
+        
+        arrSkullKing[Number(rowID)][index2]++
+        if (arrSkullKing[Number(rowID)][index2] == 6 ||
+            arrSkullKing[Number(rowID)][index2] == numberOfPlayers ) {
+            arrSkullKing[Number(rowID)][index2] = 0
+        }
+
+        if (arrSkullKing[Number(rowID)][index2]==0)
+        {
+            document.getElementById(imgSkullKingID).setAttribute("src","nullgrayskullking.png")
+            
+        }
+        else{
+            document.getElementById(imgSkullKingID).setAttribute("src","nullskullking.png")
+        }
+        
+        var labelText=document.getElementById(imgSkullKingID+"text").childNodes[0]
+        labelText.nodeValue=       arrSkullKing[Number(rowID)][index2]
+
+    }
+
 
 
 
