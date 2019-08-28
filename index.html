@@ -262,7 +262,7 @@
 
                 arrMermeid[Number(rowID)][index2] = false
 
-                imageBox.setAttribute("src", "nullgraymermeid.png")
+                imageBox.setAttribute("src", "graymermeid.png")
                 imageBox.setAttribute("id", imgMermeidID)
                 imageBox.setAttribute("onClick", "func_mermeid(" + rowID + "," + index2 + ")")
 
@@ -278,7 +278,7 @@
 
                 arrSkullKing[Number(rowID)][index2] = 0
 
-                imageBox.setAttribute("src", "nullgrayskullking.png")
+                imageBox.setAttribute("src", "grayskullking.png")
                 imageBox.setAttribute("id", imgSkullKingID)
                 imageBox.setAttribute("onClick", "func_skullking(" + rowID + "," + index2 + ")")
 
@@ -314,13 +314,13 @@
         var imgBox = document.getElementById(imgMermeidID)
 
         if (arrMermeid[Number(rowID)][index2] == false) {
-            imgBox.setAttribute("src", "nullmermeid.png")
+            imgBox.setAttribute("src", "mermeid.png")
             arrMermeid[Number(rowID)][index2] = true
         }
         else {
 
 
-            imgBox.setAttribute("src", "nullgraymermeid.png")
+            imgBox.setAttribute("src", "graymermeid.png")
             arrMermeid[Number(rowID)][index2] = false
 
         }
@@ -339,11 +339,11 @@
 
         if (arrSkullKing[Number(rowID)][index2]==0)
         {
-            document.getElementById(imgSkullKingID).setAttribute("src","nullgrayskullking.png")
+            document.getElementById(imgSkullKingID).setAttribute("src","grayskullking.png")
             
         }
         else{
-            document.getElementById(imgSkullKingID).setAttribute("src","nullskullking.png")
+            document.getElementById(imgSkullKingID).setAttribute("src","skullking.png")
         }
         
         var labelText=document.getElementById(imgSkullKingID+"text").childNodes[0]
