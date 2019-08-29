@@ -24,6 +24,10 @@ var numberOfPlayers = -1
 while (true)
 {
     temp_player = prompt("Input the number of players!! (3-6)")
+    if (temp_player==null)
+    {
+        break
+    }
     var numberOfPlayers = Number(temp_player)
 
     if (3 <= numberOfPlayers && numberOfPlayers <= 6) {
