@@ -1,4 +1,9 @@
-#container { display:block; }
+/**
+ * html5doctor.com Reset Stylesheet v1.6.1 (http://html5doctor.com/html-5-reset-stylesheet/)
+ * Richard Clark (http://richclarkdesign.com)
+ * http://cssreset.com
+ */
+/* #container { display:block; }
 
 @media only screen and (orientation:portrait){
 
@@ -36,17 +41,31 @@
 
   }
 
-}
+} */
 
 .slider-width100
 {
-    width: 100%;
+    width: 75%;
 }
 
 img {
   border-radius: 50%;
 }
-
 table {
   width: 100%;
+  border: 5px solid #444444;
+  border-collapse: collapse;
+  min-width: 700px;
+  border-spacing: 0px;
+  margin-left: auto;
+  margin-right: auto;
+}
+th, td {
+  border: 2px solid #444444;
+  padding: 0px 5px 0px 5px ;
+}
+
+p{
+  margin:0;
+  padding: 5px 5px 5px 5px;
 }
