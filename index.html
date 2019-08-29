@@ -6,12 +6,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Skull King Score App</title>
-    <link href='https://fonts.googleapis.com/css?family=Aclonica' rel='stylesheet'>
+	<link href="https://fonts.googleapis.com/css?family=Nanum+Pen+Script&display=swap" rel="stylesheet">
     <style>
-        body {
-            font-family: 'Aclonica';
-            font-size: 22px;
-        }
+		body {
+			font-family: 'Nanum Pen Script', cursive;
+			font-size: 22px;
+		}
     </style>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
@@ -20,10 +20,27 @@
 </head>
 <script>
 
-    var numberOfPlayers = prompt("Input the number of players!!")
-    alert("We play with " + numberOfPlayers + " players.")
+var numberOfPlayers = -1
+while (true)
+{
+    temp_player = prompt("Input the number of players!! (3-6)")
+    var numberOfPlayers = Number(temp_player)
+
+    if (3 <= numberOfPlayers && numberOfPlayers <= 6) {
+			break
+		}
+}
 
     function func_btn_confirm() {
+
+        for (let index = 0; index < numberOfPlayers; index++) {
+            if (document.getElementById("textboxName" + index).value.length==0)
+            {
+                alert("Enter the name for each player!")
+                return;
+            }
+            
+        }
 
         for (let index = 0; index < numberOfPlayers; index++) {
             document.getElementById("textboxName" + index).style.display = "none"
@@ -41,7 +58,7 @@
 
         for (let index = 0; index < numberOfPlayers; index++) {
             var cell = row.insertCell(index + 1);
-            cell.innerHTML = "<p>" + document.getElementById("textboxName" + index).value + ":<br><span id='score_" + (index + 1) + "'></span></p>";
+            cell.innerHTML = "<p>" + document.getElementById("textboxName" + index).value + ": <span id='score_" + (index + 1) + "'></span></p>";
 
             //            document.getElementById("textName" + index).innerHTML = document.getElementById("textboxName" + index).value;
         }
@@ -97,6 +114,8 @@
 
             var thisButton = document.getElementById("rowButton" + (rowID - 1))
             if (arrClicked[rowID - 1] == false) {
+                var thisrow = scoreTable.rows[rowID - 1]
+                thisrow.setAttribute("height","50px")
                 // calculating score
                 thisButton.setAttribute("style", "background-color: #000; color:#fff")
                 arrClicked[rowID - 1] = true
@@ -109,8 +128,30 @@
                     document.getElementById("rangeInputreal" + (Number(rowID) - 1) + "_" + index2).style.display = 'none'
 
 
+                    document.getElementById("imgMermeid" + (Number(rowID) - 1) + "_" + index2).style.display = 'none'
+                    document.getElementById("imgSkullKing" + (Number(rowID) - 1) + "_" + index2).style.display = 'none'
+                    document.getElementById("imgSkullKing" + (Number(rowID) - 1) + "_" + index2+"text").style.display = 'none'
+                    
+                    document.getElementById("rangeInputValue" + (Number(rowID) - 1) + "_" + index2).style.display = 'none'
+
+                    document.getElementById("brBox" + (Number(rowID) - 1) + "_" + index2).style.display = 'none'
+                    
+
+                    document.getElementById("rangeInputrealValue" + (Number(rowID) - 1) + "_" + index2).style.display = 'none'
+
+                    var resultText = document.getElementById("textResult" + (Number(rowID) - 1) + "_" + index2)
+                    resultText.style.display = 'inline'
+                    
+
+                    
+                                  
+
+
                     var bat = Number(arrStoredScore["rangeInput"][Number(rowID) - 1][index2])
                     var actual = Number(arrStoredScore["rangeInputreal"][Number(rowID) - 1][index2])
+
+                    resultText.innerHTML=bat+"/"+actual
+
                     if (bat == actual) {
                         if (bat == 0) {
                             arrScore[index2] += 10 * Number(rowID - 1)
@@ -122,6 +163,13 @@
 
                         if (arrMermeid[Number(rowID) - 1][index2] == true) {
                             arrScore[index2] += 50
+                            resultText.innerHTML=bat+"/"+actual+" <img src='img/mermeid.png' height=20px>"
+                        }
+                        else if (arrSkullKing[Number(rowID)-1][index2]>0)
+                        {
+                            arrScore[index2] += 30*arrSkullKing[Number(rowID)-1][index2]
+                            resultText.innerHTML=bat+"/"+actual+" <img src='img/skullking.png' height=20px> "+arrSkullKing[Number(rowID)-1][index2]
+
                         }
 
                     }
@@ -147,6 +195,18 @@
                     document.getElementById("rangeInput" + (Number(rowID) - 1) + "_" + index2).style.display = 'inline'
                     document.getElementById("rangeInputreal" + (Number(rowID) - 1) + "_" + index2).style.display = 'inline'
 
+                    document.getElementById("imgMermeid" + (Number(rowID) - 1) + "_" + index2).style.display = 'inline'
+                    document.getElementById("imgSkullKing" + (Number(rowID) - 1) + "_" + index2).style.display = 'inline'
+                    document.getElementById("imgSkullKing" + (Number(rowID) - 1) + "_" + index2+"text").style.display = 'inline'
+
+                    document.getElementById("rangeInputValue" + (Number(rowID) - 1) + "_" + index2).style.display = 'inline'
+
+                    document.getElementById("rangeInputrealValue" + (Number(rowID) - 1) + "_" + index2).style.display = 'inline'
+                    document.getElementById("brBox" + (Number(rowID) - 1) + "_" + index2).style.display = 'inline'
+
+                    var resultText = document.getElementById("textResult" + (Number(rowID) - 1) + "_" + index2)
+                    resultText.style.display = 'none'
+
 
                     var bat = Number(arrStoredScore["rangeInput"][Number(rowID) - 1][index2])
                     var actual = Number(arrStoredScore["rangeInputreal"][Number(rowID) - 1][index2])
@@ -162,6 +222,10 @@
 
                         if (arrMermeid[Number(rowID) - 1][index2] == true) {
                             arrScore[index2] -= 50
+                        }
+                        else if (arrSkullKing[Number(rowID)-1][index2]>0)
+                        {
+                            arrScore[index2] -= 30*arrSkullKing[Number(rowID)-1][index2]
                         }
                     }
                     else {
@@ -203,6 +267,7 @@
 
         for (let index2 = 1; index2 <= numberOfPlayers; index2++) {
             var thisCellinRow = thisRow.insertCell(index2);
+            thisCellinRow.setAttribute("padding","100px")
 
             var divDemo = document.createElement('p');
 
@@ -253,8 +318,13 @@
 
                 spanInput.innerText = " 0"
                 divDemo.appendChild(spanInput)
-                divDemo.appendChild(document.createElement('br'))
+                var brID="brBox"+rowID + "_" + index2
+                var brElement=document.createElement('br')
+                brElement.setAttribute("id",brID)
+                divDemo.appendChild(brElement)
             }
+
+                
 
             {
                 var imageBox = document.createElement('img');
@@ -262,8 +332,9 @@
 
                 arrMermeid[Number(rowID)][index2] = false
 
-                imageBox.setAttribute("src", "graymermeid.png")
+                imageBox.setAttribute("src", "img/graymermeid.png")
                 imageBox.setAttribute("id", imgMermeidID)
+                imageBox.setAttribute("height", "30px")
                 imageBox.setAttribute("onClick", "func_mermeid(" + rowID + "," + index2 + ")")
 
 
@@ -271,6 +342,10 @@
 
             }
 
+            var spanTemp = document.createElement("span")
+                spanTemp.setAttribute("id", "spanTemp" + rowID + "_" + index2)
+                spanTemp.innerText="  "
+                divDemo.appendChild(spanTemp)
 
             {
                 var imageBox = document.createElement('img');
@@ -278,15 +353,14 @@
 
                 arrSkullKing[Number(rowID)][index2] = 0
 
-                imageBox.setAttribute("src", "grayskullking.png")
+                imageBox.setAttribute("src", "img/grayskullking.png")
                 imageBox.setAttribute("id", imgSkullKingID)
+                imageBox.setAttribute("height", "30px")
                 imageBox.setAttribute("onClick", "func_skullking(" + rowID + "," + index2 + ")")
 
-                var x = document.createElement("LABEL");
-                var t = document.createTextNode("0");
+                var x = document.createElement("span");
                 x.setAttribute("id",imgSkullKingID+"text")
-                x.setAttribute("for", imgSkullKingID);
-                x.appendChild(t);
+                x.innerText="0"
                 
 
                 divDemo.appendChild(imageBox);
@@ -295,10 +369,19 @@
 
             }
 
+            {
+                var TextResult = document.createElement('span')
+                TextResult.setAttribute("id","textResult"+rowID+"_"+index2)
+                TextResult.style.display='none'
+
+                divDemo.appendChild(TextResult)
+            }
+
             // var rangeVlaue=document.createElement('p')
             // rangeVlaue.setAttribute("id","rangeValue" + index + "_" + index2)
             // rangeVlaue.value=" 0"
             thisCellinRow.appendChild(divDemo);
+            
 
 
             //thisCellinRow.innerHTML = 
@@ -314,13 +397,28 @@
         var imgBox = document.getElementById(imgMermeidID)
 
         if (arrMermeid[Number(rowID)][index2] == false) {
-            imgBox.setAttribute("src", "mermeid.png")
+            imgBox.setAttribute("src", "img/mermeid.png")
             arrMermeid[Number(rowID)][index2] = true
+            for (let index = 1; index <= numberOfPlayers; index++) {
+                if (index!=index2 && arrMermeid[Number(rowID)][index]==true)
+                {
+                    func_mermeid(rowID, index)
+                }
+
+                if (arrSkullKing[Number(rowID)][index] > 0) {
+                arrSkullKing[Number(rowID)][index]=5
+                func_skullking(rowID,index)
+            }
+                
+                
+            }
+
+            
         }
         else {
 
 
-            imgBox.setAttribute("src", "graymermeid.png")
+            imgBox.setAttribute("src", "img/graymermeid.png")
             arrMermeid[Number(rowID)][index2] = false
 
         }
@@ -339,15 +437,29 @@
 
         if (arrSkullKing[Number(rowID)][index2]==0)
         {
-            document.getElementById(imgSkullKingID).setAttribute("src","grayskullking.png")
+            document.getElementById(imgSkullKingID).setAttribute("src","img/grayskullking.png")
             
         }
         else{
-            document.getElementById(imgSkullKingID).setAttribute("src","skullking.png")
+            document.getElementById(imgSkullKingID).setAttribute("src","img/skullking.png")
+
+            for (let index = 1; index <= numberOfPlayers; index++){
+                if (index!=index2 && arrSkullKing[Number(rowID)][index]>0)
+                {
+                    arrSkullKing[Number(rowID)][index]=5
+                    func_skullking(rowID, index)
+                }
+
+                if (arrMermeid[Number(rowID)][index] == true) {
+
+                    func_mermeid(rowID, index)
+                }
+            }
+
+            
         }
         
-        var labelText=document.getElementById(imgSkullKingID+"text").childNodes[0]
-        labelText.nodeValue=       arrSkullKing[Number(rowID)][index2]
+        var labelText=document.getElementById(imgSkullKingID+"text").innerText = arrSkullKing[Number(rowID)][index2]
 
     }
 
@@ -410,7 +522,7 @@
             for (let index = 0; index < numberOfPlayers; index++) {
                 var divaa = document.createElement('input');
                 divaa.setAttribute("id", "textboxName" + index);
-                divaa.setAttribute("value", "P" + index);
+                //divaa.setAttribute("value", "P" + index);
                 divaa.setAttribute("placeholder", "P" + (index + 1));
                 divaa.setAttribute("style", "font-size:100%; font-family: 'Aclonica'; position:relative; width:" + (100 / numberOfPlayers - 5) + "%")
                 document.body.appendChild(divaa);
