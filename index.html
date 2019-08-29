@@ -99,11 +99,11 @@ while (true)
     }
 
 
-    var arrMermeid = new Array()
+    var arrMermaid = new Array()
     for (let index = 0; index < 11; index++) {
-        arrMermeid[index] = new Array()
+        arrMermaid[index] = new Array()
         for (let index2 = 1; index2 < numberOfPlayers; index2++) {
-            arrMermeid[index][index2] = false;
+            arrMermaid[index][index2] = false;
         }
     }
 
@@ -128,7 +128,7 @@ while (true)
                     document.getElementById("rangeInputreal" + (Number(rowID) - 1) + "_" + index2).style.display = 'none'
 
 
-                    document.getElementById("imgMermeid" + (Number(rowID) - 1) + "_" + index2).style.display = 'none'
+                    document.getElementById("imgMermaid" + (Number(rowID) - 1) + "_" + index2).style.display = 'none'
                     document.getElementById("imgSkullKing" + (Number(rowID) - 1) + "_" + index2).style.display = 'none'
                     document.getElementById("imgSkullKing" + (Number(rowID) - 1) + "_" + index2+"text").style.display = 'none'
                     
@@ -161,9 +161,9 @@ while (true)
                         }
 
 
-                        if (arrMermeid[Number(rowID) - 1][index2] == true) {
+                        if (arrMermaid[Number(rowID) - 1][index2] == true) {
                             arrScore[index2] += 50
-                            resultText.innerHTML=bat+"/"+actual+" <img src='img/mermeid.png' height=20px>"
+                            resultText.innerHTML=bat+"/"+actual+" <img src='img/mermaid.png' height=20px>"
                         }
                         else if (arrSkullKing[Number(rowID)-1][index2]>0)
                         {
@@ -195,7 +195,7 @@ while (true)
                     document.getElementById("rangeInput" + (Number(rowID) - 1) + "_" + index2).style.display = 'inline'
                     document.getElementById("rangeInputreal" + (Number(rowID) - 1) + "_" + index2).style.display = 'inline'
 
-                    document.getElementById("imgMermeid" + (Number(rowID) - 1) + "_" + index2).style.display = 'inline'
+                    document.getElementById("imgMermaid" + (Number(rowID) - 1) + "_" + index2).style.display = 'inline'
                     document.getElementById("imgSkullKing" + (Number(rowID) - 1) + "_" + index2).style.display = 'inline'
                     document.getElementById("imgSkullKing" + (Number(rowID) - 1) + "_" + index2+"text").style.display = 'inline'
 
@@ -220,7 +220,7 @@ while (true)
                         }
 
 
-                        if (arrMermeid[Number(rowID) - 1][index2] == true) {
+                        if (arrMermaid[Number(rowID) - 1][index2] == true) {
                             arrScore[index2] -= 50
                         }
                         else if (arrSkullKing[Number(rowID)-1][index2]>0)
@@ -328,14 +328,14 @@ while (true)
 
             {
                 var imageBox = document.createElement('img');
-                var imgMermeidID = "imgMermeid" + rowID + "_" + index2
+                var imgMermaidID = "imgMermaid" + rowID + "_" + index2
 
-                arrMermeid[Number(rowID)][index2] = false
+                arrMermaid[Number(rowID)][index2] = false
 
-                imageBox.setAttribute("src", "img/graymermeid.png")
-                imageBox.setAttribute("id", imgMermeidID)
+                imageBox.setAttribute("src", "img/graymermaid.png")
+                imageBox.setAttribute("id", imgMermaidID)
                 imageBox.setAttribute("height", "30px")
-                imageBox.setAttribute("onClick", "func_mermeid(" + rowID + "," + index2 + ")")
+                imageBox.setAttribute("onClick", "func_mermaid(" + rowID + "," + index2 + ")")
 
 
                 divDemo.appendChild(imageBox);
@@ -392,17 +392,17 @@ while (true)
 
     }
 
-    function func_mermeid(rowID, index2) {
-        var imgMermeidID = "imgMermeid" + rowID + "_" + index2
-        var imgBox = document.getElementById(imgMermeidID)
+    function func_mermaid(rowID, index2) {
+        var imgMermaidID = "imgMermaid" + rowID + "_" + index2
+        var imgBox = document.getElementById(imgMermaidID)
 
-        if (arrMermeid[Number(rowID)][index2] == false) {
-            imgBox.setAttribute("src", "img/mermeid.png")
-            arrMermeid[Number(rowID)][index2] = true
+        if (arrMermaid[Number(rowID)][index2] == false) {
+            imgBox.setAttribute("src", "img/mermaid.png")
+            arrMermaid[Number(rowID)][index2] = true
             for (let index = 1; index <= numberOfPlayers; index++) {
-                if (index!=index2 && arrMermeid[Number(rowID)][index]==true)
+                if (index!=index2 && arrMermaid[Number(rowID)][index]==true)
                 {
-                    func_mermeid(rowID, index)
+                    func_mermaid(rowID, index)
                 }
 
                 if (arrSkullKing[Number(rowID)][index] > 0) {
@@ -418,8 +418,8 @@ while (true)
         else {
 
 
-            imgBox.setAttribute("src", "img/graymermeid.png")
-            arrMermeid[Number(rowID)][index2] = false
+            imgBox.setAttribute("src", "img/graymermaid.png")
+            arrMermaid[Number(rowID)][index2] = false
 
         }
     }
@@ -450,9 +450,9 @@ while (true)
                     func_skullking(rowID, index)
                 }
 
-                if (arrMermeid[Number(rowID)][index] == true) {
+                if (arrMermaid[Number(rowID)][index] == true) {
 
-                    func_mermeid(rowID, index)
+                    func_mermaid(rowID, index)
                 }
             }
 
